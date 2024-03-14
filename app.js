@@ -48,6 +48,14 @@ app.put('/api/pokemons/:id',(req,res) => {
     res.json(helper.success(message,pokemonUpdate))
 })
 
+app.delete('/api/pokemons/:id',(req,res) => {
+    const id= parseInt(req.params.id)
+    const pokemonDelete= pokemons.find(pokemon =>pokemon.id===id)
+    pokemons.filter(pokemon => pokemon.id!==id)
+    const message= `le pokemon ${pokemonDelete.name} a été bien supprimé`
+    res.json(helper.success(message,pokemonDelete))
+})
+
 
 // app.get('/api/pokemons',(req,res) => {
 //     res.send(`Il y a ${pokemons.length} pokemons dans le pokedex pour le moment`)
