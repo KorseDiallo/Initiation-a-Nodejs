@@ -48,18 +48,22 @@ app.put('/api/pokemons/:id',(req,res) => {
     res.json(helper.success(message,pokemonUpdate))
 })
 
-app.delete('/api/pokemons/:id',(req,res) => {
-    const id= parseInt(req.params.id)
-    const pokemonDelete= pokemons.find(pokemon =>pokemon.id===id)
-    pokemons.filter(pokemon => pokemon.id!==id)
-    const message= `le pokemon ${pokemonDelete.name} a été bien supprimé`
-    res.json(helper.success(message,pokemonDelete))
-})
+
+app.delete('/api/pokemons/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const pokemonIndex = pokemons.findIndex(pokemon => pokemon.id === id);
+
+    if (pokemonIndex !== -1) {
+        const pokemonDelete = pokemons[pokemonIndex];
+        pokemons.splice(pokemonIndex, 1); 
+        const message = `Le Pokémon ${pokemonDelete.name} a été bien supprimé.`;
+        res.json(helper.success(message, pokemonDelete));
+    } 
+});
 
 
-// app.get('/api/pokemons',(req,res) => {
-//     res.send(`Il y a ${pokemons.length} pokemons dans le pokedex pour le moment`)
-// })
+
+
 
 app.listen(port,()=>console.log(`Notre application est demarrée sur:http:://localhost:${port}`))
 
